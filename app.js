@@ -14,6 +14,7 @@ const aboutStartingContent = "Welcome to Curious Quill! My name is Jane, and I'm
 const contactInfo = "Thanks for taking the time to check out my blog! I'm always eager to hear from my readers and connect with others who share my interests. If you have any questions, comments, or feedback on my writing or the topics I cover, please don't hesitate to get in touch with me. You can reach me directly by sending an email to [insert email address here], or by filling out the contact form below. I'll do my best to get back to you as soon as I can. Thanks again for your support, and I look forward to hearing from you!";
 
 
+let blogs = [];
 
 
 app.get("/" , function(req,res){
@@ -21,12 +22,24 @@ app.get("/" , function(req,res){
 })
 
 app.get("/about" , function(req,res){
-    console.log(aboutStartingContent);
     res.render("about" , {aboutStartingContent:aboutStartingContent});
 })
 
 app.get("/contact" , function(req,res){
     res.render("contact" , {contactInfo:contactInfo});
+})
+
+app.get("/compose" , function(req,res){
+    res.render("compose");
+})
+
+app.post("/compose" , function(req,res){
+    const blogPost = {
+        title: req.body.blogTitle,
+        body: req.body.blogBody
+    };
+    blogs.push(blogPost);
+    res.redirect("/");
 })
 
 
