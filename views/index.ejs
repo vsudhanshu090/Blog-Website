@@ -2,3 +2,11 @@
 
 <h1>Hello, world!</h1>
 <p><%= homeStartingText %></p>
+
+<% for (let i=0;i<blogs.length;i++){ %>
+    <h2> <%= blogs[i].title %> </h2>
+
+    <p><%= blogs[i].body.substring(0,200) + " ..." %>
+    <a href="/blogs/<%=blogs[i].title%>">Read More</a>
+    </p>
+<% } %>

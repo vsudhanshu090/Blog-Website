@@ -1,5 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const ejs = require("ejs");
+const _ = require("lodash");
 
 const app = express();
 
@@ -18,7 +20,7 @@ let blogs = [];
 
 
 app.get("/" , function(req,res){
-    res.render("index" , {homeStartingText:homeStartingText});
+    res.render("index" , {homeStartingText:homeStartingText , blogs:blogs});
 })
 
 app.get("/about" , function(req,res){
@@ -42,6 +44,16 @@ app.post("/compose" , function(req,res){
     res.redirect("/");
 })
 
+
+app.get("/blogs/:blogName" , function(req,res){
+    const requestedTitle = _.lowerCase(req.params.blogName);
+
+    for (var i=0;i<blogs.length;i++){
+        const storedTitle = _.lowerCase(blogs[i].title);
+        if (storedTitle === requestedTitle)
+            res.render("blog" , {title: blogs[i].title , body: blogs[i].body})
+    }
+})
 
 
 app.listen(3000 , function(){
